@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<enemyList>
+  <enemy name="elf">
+    <health>200</health>
+    <defense>100</defense>
+    <attack>300</attack>
+    <atkSpeed>2</atkSpeed>
+    <exp>1500</exp>
+
+    <weapon type="longBow">
+      <id>lbElf</id>
+      <range>100</range>
+    </weapon>
+    <weapon type="shortSword">
+      <id>ssElf</id>
+      <range>10</range>
+    </weapon>
+
+  </enemy>
+  
+  <enemy name="undead">
+    <health>500</health>
+    <defense>200</defense>
+    <attack>100</attack>
+    <atkSpeed>1</atkSpeed>
+    <exp>1000</exp>
+
+    <weapon type="club">
+      <id>cUndead</id>
+      <range>20</range>
+    </weapon>
+
+  </enemy>
+  
+  <enemy name="giant">
+    <health>2000</health>
+    <defense>500</defense>
+    <attack>400</attack>
+    <atkSpeed>0.5f</atkSpeed>
+    <exp>5000</exp>
+
+    <weapon type="caestus">
+      <id>caGiant</id>
+      <range>20</range>
+    </weapon>
+
+  </enemy>
+  
+  <enemy name="orc">
+    <health>600</health>
+    <defense>300</defense>
+    <attack>200</attack>
+    <atkSpeed>1.5f</atkSpeed>
+    <exp>2000</exp>
+
+    <weapon type="largeSword">
+      <id>lsOrc</id>
+      <range>25</range>
+    </weapon>
+    <weapon type="shortSword">
+      <id>ssOrc</id>
+      <range>25</range>
+    </weapon>
+
+  </enemy>
+</enemyList>
