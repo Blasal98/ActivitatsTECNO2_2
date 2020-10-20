@@ -87,19 +87,20 @@ int main(int, char *[])
 		}
 
 		// UPDATE
+		playerRect.x += (mouseCoord.x - playerRect.x - playerRect.w / 2) / 5;
+		playerRect.y += (mouseCoord.y - playerRect.y - playerRect.h / 2) / 5;
 		
 		// DRAW
 		SDL_RenderClear(m_renderer);
 		//Background
 		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &myRectangle2ToSDL_Rect(bgRect));
 
-		
 		//Cursor
 		SDL_RenderCopy(m_renderer, playerTexture, nullptr, &myRectangle2ToSDL_Rect(playerRect));
 
 
-		SDL_RenderPresent(m_renderer);
 
+		SDL_RenderPresent(m_renderer);
 
 	}
 
