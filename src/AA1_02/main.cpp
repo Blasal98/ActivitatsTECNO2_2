@@ -1,13 +1,19 @@
-#include <SDL.h> // Always needs to be included for an SDL app
+#include <SDL.h> //Always needs to be included for an SDL app
 #include <SDL_image.h>
+#include <SDL_ttf.h> 
+#include <SDL_mixer.h> 
 
 #include <exception>
 #include <iostream>
 #include <string>
+#include <vector>
 
-//Game general information
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#include "Types.h"
+#include "Constants.h" 
+#include "Utils.h"
+#include "Button.h"
+
+
 
 int main(int, char *[])
 {
@@ -25,61 +31,81 @@ int main(int, char *[])
 	if (m_renderer == nullptr)
 		throw "No es pot inicialitzar SDL_Renderer";
 
-	//Initialize renderer color
-	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
-
-	//-->SDL_Image
+	//-->SDL_Image 
 	const Uint8 imgFlags{ IMG_INIT_PNG | IMG_INIT_JPG };
-	if (!(IMG_Init(imgFlags) & imgFlags))
-		throw "Error: SDL_image init";
+	if (!(IMG_Init(imgFlags) & imgFlags)) throw "Error: SDL_image init";
 
 	//-->SDL_TTF
+
 	//-->SDL_Mix
 
+
+
+	//MOUSE
+	Vector2 mouseCoord{ 0,0 };
+	bool clicked = false;
+
 	// --- SPRITES ---
-	//Background
-	SDL_Texture *bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
-	if (bgTexture == nullptr)
-		throw "Error: bgTexture init";
-	SDL_Rect bgRect{ 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+		//Background
+	SDL_Texture* bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
+	if (bgTexture == nullptr) throw "Error: bgTexture init";
+	Rectangle2 bgRect{ 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
+
+
+	//Cursor
+	SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
+	if (playerTexture == nullptr) throw "Error: playerTexture init";
+	Rectangle2 playerRect{ 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT };
+
+
 	//-->Animated Sprite ---
 
-	// --- TEXT ---
-
-	// --- AUDIO ---
 
 	// --- GAME LOOP ---
+
 	SDL_Event event;
 	bool isRunning = true;
-	while (isRunning)
-	{
+	while (isRunning) {
 		// HANDLE EVENTS
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type)
-			{
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
 			case SDL_QUIT:
 				isRunning = false;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE)
-					isRunning = false;
+				if (event.key.keysym.sym == SDLK_ESCAPE) isRunning = false;
+				break;
+			case SDL_MOUSEMOTION:
+				mouseCoord.x = event.motion.x;
+				mouseCoord.y = event.motion.y;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				clicked = true;
 				break;
 			default:;
 			}
 		}
 
 		// UPDATE
-
+		
 		// DRAW
 		SDL_RenderClear(m_renderer);
 		//Background
-		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &bgRect);
+		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &myRectangle2ToSDL_Rect(bgRect));
+
+		
+		//Cursor
+		SDL_RenderCopy(m_renderer, playerTexture, nullptr, &myRectangle2ToSDL_Rect(playerRect));
+
+
 		SDL_RenderPresent(m_renderer);
+
+
 	}
 
 	// --- DESTROY ---
 	SDL_DestroyTexture(bgTexture);
+	SDL_DestroyTexture(playerTexture);
 	IMG_Quit();
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
