@@ -21,11 +21,13 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
