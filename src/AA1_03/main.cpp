@@ -49,20 +49,20 @@ int main(int, char*[])
 
 
 	//MOUSE
-	Vector2 mouseCoord{ 0,0 };
+	VEC2 mouseCoord{ 0,0 };
 	bool clicked = false;
 
 	// --- SPRITES ---
 		//Background
 	SDL_Texture* bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
 	if (bgTexture == nullptr) throw "Error: bgTexture init";
-	Rectangle2 bgRect{ 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
+	RECT bgRect{ 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
 
 
 	//Cursor
 	SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
 	if (playerTexture == nullptr) throw "Error: playerTexture init";
-	Rectangle2 playerRect{ 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT };
+	RECT playerRect{ 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT };
 
 
 	//-->Animated Sprite ---
@@ -77,7 +77,7 @@ int main(int, char*[])
 
 	SDL_Texture *textTexture{ SDL_CreateTextureFromSurface(m_renderer,tmpSurf) };
 	if (textTexture == nullptr) throw "Error: textTexture init";
-	Rectangle2 textRect{ TITLE_TEXT_X, TITLE_TEXT_Y,tmpSurf->w,tmpSurf->h };
+	RECT textRect{ TITLE_TEXT_X, TITLE_TEXT_Y,tmpSurf->w,tmpSurf->h };
 
 	//Buttons
 

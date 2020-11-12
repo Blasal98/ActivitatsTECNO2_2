@@ -13,7 +13,7 @@ struct Button {
 	SDL_Color activeColor;
 	SDL_Color hoverColor;
 
-	Rectangle2 rect;
+	RECT rect;
 	int x, y;
 	std::string text;
 
@@ -69,7 +69,7 @@ struct Button {
 	//	TTF_CloseFont(_font);
 	//}
 
-	void hoverButton(Vector2 _mouseCoord, SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
+	void hoverButton(VEC2 _mouseCoord, SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
 
 		if (colCursorVsRect(_mouseCoord, rect)) {
 			if (color.a != hoverColor.a) {
@@ -106,7 +106,7 @@ struct Button {
 		}
 	}
 
-	bool wasButtonClicked(Vector2 _mouseCoord, bool _clicked) {
+	bool wasButtonClicked(VEC2 _mouseCoord, bool _clicked) {
 		return (colCursorVsRect(_mouseCoord, rect) && _clicked);
 	}
 };
