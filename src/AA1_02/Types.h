@@ -12,7 +12,7 @@ struct Rectangle2 {
 	int h;
 };
 
-
+enum buttonType { PLAY, SOUND, EXIT, COUNT };
 
 
 
