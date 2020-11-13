@@ -26,9 +26,10 @@ struct Text {
 };
 
 struct Font {
-	int size;
-	std::string path;
+	
 	std::string id;
+	std::string path;
+	int size;
 
 };
 
