@@ -20,8 +20,8 @@ struct Color {
 };
 
 struct Text {
-	std::string text;
 	std::string id;
+	std::string text;
 	Color color;
 };
 

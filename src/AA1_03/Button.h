@@ -1,17 +1,18 @@
 #pragma once
+#include "Renderer.h"
 
 struct Button {
 	buttonType type;
 
-	SDL_Texture *texture = nullptr;
-	SDL_Texture *defaultTexture = nullptr;
-	SDL_Texture *activeTexture = nullptr;
-	SDL_Texture *hoverTexture = nullptr;
+	std::string buttonId;
+	std::string defaultId = "default";
+	std::string activeId = "active";
+	std::string hoverId = "hover";
+	std::string actualId;
 
-	SDL_Color color;
-	SDL_Color defaultColor;
-	SDL_Color activeColor;
-	SDL_Color hoverColor;
+	Color defaultColor;
+	Color activeColor;
+	Color hoverColor;
 
 	RECT rect;
 	int x, y;
@@ -20,29 +21,26 @@ struct Button {
 	bool activated;
 
 
-	Button(SDL_Renderer *_renderer, SDL_Surface *_surface, TTF_Font *font, int _x, int _y, std::string _text, SDL_Color _defaultColor, SDL_Color _activeColor, SDL_Color _hoverColor, buttonType _type) {
+	Button(Renderer *_renderer,std::string button_id, std::string font_id, std::string _text, buttonType _type, int _x, int _y) {
 		
-		color = _defaultColor;
-		defaultColor = _defaultColor;
-		activeColor = _activeColor;
-		hoverColor = _hoverColor;
+		buttonId = button_id;
+		actualId = defaultId;
+
+		defaultColor = { 255,255,255,255 };
+		activeColor = { 255,255,0,255 };
+		hoverColor = { 255,0,0,255 };
+
+		_renderer->LoadTextureText(font_id, { buttonId + defaultId,_text, defaultColor });
+		_renderer->LoadTextureText(font_id, { buttonId + activeId,_text, activeColor });
+		_renderer->LoadTextureText(font_id, { buttonId + hoverId,_text, hoverColor });
+
+		_renderer->LoadRect(buttonId + "rect", rect);
+
 		
-		_surface = { TTF_RenderText_Blended(font,_text.c_str(),_defaultColor) };
-		defaultTexture = { SDL_CreateTextureFromSurface(_renderer,_surface) };
-		if (defaultTexture == nullptr) throw "Error: Default texture init";
-
-		_surface = { TTF_RenderText_Blended(font,_text.c_str(),_activeColor) };
-		activeTexture = { SDL_CreateTextureFromSurface(_renderer,_surface) };
-		if (activeTexture == nullptr) throw "Error: Active texture init";
-
-		_surface = { TTF_RenderText_Blended(font,_text.c_str(),_hoverColor) };
-		hoverTexture = { SDL_CreateTextureFromSurface(_renderer,_surface) };
-		if (hoverTexture == nullptr) throw "Error: Hover texture init";
-		texture = defaultTexture;
-
 		x = _x;
 		y = _y;
-		rect = { x, y, _surface->w, _surface->h };
+		rect = { x, y, _renderer->GetTextureSize(buttonId + defaultId).x, _renderer->GetTextureSize(buttonId + defaultId).y };
+
 		text = _text;
 		type = _type;
 		if (type == SOUND) activated = true;
@@ -51,25 +49,14 @@ struct Button {
 	}
 
 	~Button() {
-		SDL_DestroyTexture(texture);
-		SDL_DestroyTexture(defaultTexture);
-		SDL_DestroyTexture(hoverTexture);
-		SDL_DestroyTexture(activeTexture);
+
+	}
+	void draw(Renderer* _renderer) {
+		_renderer->PushImage(buttonId + defaultId, buttonId + "rect");
+		std::cout << "Gola";
 	}
 
-
-
-	//void colorChange(SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface, SDL_Color _newColor) {
-	//	_font = { TTF_OpenFont("../../res/ttf/saiyan.ttf",60) };
-	//	if (_font == nullptr) throw "No es pot inicialitzar el TTF_Font";
-	//	color = _newColor;
-	//	_surface = { TTF_RenderText_Blended(_font,text.c_str(),color) };
-	//	texture = { SDL_CreateTextureFromSurface(_renderer,_surface) };
-	//	SDL_FreeSurface(_surface);
-	//	TTF_CloseFont(_font);
-	//}
-
-	void hoverButton(VEC2 _mouseCoord, SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
+	/*void hoverButton(VEC2 _mouseCoord, SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
 
 		if (colCursorVsRect(_mouseCoord, rect)) {
 			if (color.a != hoverColor.a) {
@@ -105,7 +92,7 @@ struct Button {
 			activated = false;
 		}
 	}
-
+*/
 	bool wasButtonClicked(VEC2 _mouseCoord, bool _clicked) {
 		return (colCursorVsRect(_mouseCoord, rect) && _clicked);
 	}

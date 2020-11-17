@@ -19,27 +19,6 @@ int main(int, char*[])
 {
 	Renderer* m_renderer = new Renderer();
 
-	//// --- INIT SDL ---
-	//if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-	//	throw "No es pot inicialitzar SDL subsystems";
-
-	//// --- WINDOW ---
-	//SDL_Window *m_window{ SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN) };
-	//if (m_window == nullptr)
-	//	throw "No es pot inicialitzar SDL_Window";
-
-	//// --- RENDERER ---
-	//SDL_Renderer *m_renderer{ SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) };
-	//if (m_renderer == nullptr)
-	//	throw "No es pot inicialitzar SDL_Renderer";
-
-	////-->SDL_Image 
-	//const Uint8 imgFlags{ IMG_INIT_PNG | IMG_INIT_JPG };
-	//if (!(IMG_Init(imgFlags) & imgFlags)) throw "Error: SDL_image init";
-
-	////-->SDL_TTF
-	//if (TTF_Init() != 0) throw "No es pot inicialitzar el TTF_Init";
-
 	//-->SDL_Mix
 	const Uint8 audFlags{ MIX_INIT_MP3 | MIX_INIT_OGG };
 	if (!(Mix_Init(audFlags) & audFlags)) throw "Error: SDL_mixer init";
@@ -54,44 +33,26 @@ int main(int, char*[])
 	VEC2 mouseCoord{ 0,0 };
 	bool clicked = false;
 
-	// --- SPRITES ---
-		//Background
-	/*SDL_Texture* bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
-	if (bgTexture == nullptr) throw "Error: bgTexture init";
-	RECT bgRect{ 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };*/
+
 	m_renderer->LoadTexture("backGround_Texture", "../../res/img/bg.jpg");
 	m_renderer->LoadRect("backGround_Rect", { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	//Cursor
-	/*SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
-	if (playerTexture == nullptr) throw "Error: playerTexture init";
-	RECT playerRect{ 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT };*/
 	m_renderer->LoadTexture("player_Texture", "../../res/img/kintoun.png");
 	m_renderer->LoadRect("player_Rect", { 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT });
 
 	//-->Animated Sprite ---
 
 	// --- TEXT ---
-		//Font
-	//TTF_Font *font{ TTF_OpenFont("../../res/ttf/saiyan.ttf",60) };
-	//if (font == nullptr) throw "No es pot inicialitzar el TTF_Font";
-	////Surface
-	//SDL_Surface *tmpSurf{ TTF_RenderText_Blended(font,TITLE_TEXT,TITTLE_TEXT_COLOR) };
-	////Title
-
-	//SDL_Texture *textTexture{ SDL_CreateTextureFromSurface(m_renderer,tmpSurf) };
-	//if (textTexture == nullptr) throw "Error: textTexture init";
-	//RECT textRect{ TITLE_TEXT_X, TITLE_TEXT_Y,tmpSurf->w,tmpSurf->h };
 
 	m_renderer->LoadFont({"saiyan_Font","../../res/ttf/saiyan.ttf" ,60});
-	m_renderer->LoadTextureText("saiyan_Font", { "MY SDL GAME", "title_Text", {255,255,255,255} });
-	m_renderer->LoadRect("title_Text",{ TITLE_TEXT_X, TITLE_TEXT_Y ,m_renderer->GetTextureSize("Title_Text").x, m_renderer->GetTextureSize("Title_Text").y});
+	m_renderer->LoadTextureText("saiyan_Font", {  "title_Text","MY SDL GAME", {255,255,255,255} });
+	m_renderer->LoadRect("title_Rect",{ TITLE_TEXT_X, TITLE_TEXT_Y ,m_renderer->GetTextureSize("title_Text").x, m_renderer->GetTextureSize("title_Text").y});
 
 	//Buttons
 
-	/*Button playButton(m_renderer, tmpSurf, font, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_TEXT, BUTTON_DEFAULT_COLOR, BUTTON_ACTIVE_COLOR, BUTTON_HOVER_COLOR, buttonType::PLAY);
-	Button soundButton(m_renderer, tmpSurf, font, SOUND_BUTTON_X, SOUND_BUTTON_Y, SOUND_BUTTON_TEXT, BUTTON_DEFAULT_COLOR, BUTTON_ACTIVE_COLOR, BUTTON_HOVER_COLOR, buttonType::SOUND);
-	Button exitButton(m_renderer, tmpSurf, font, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_TEXT, BUTTON_DEFAULT_COLOR, BUTTON_ACTIVE_COLOR, BUTTON_HOVER_COLOR, buttonType::EXIT);*/
+	Button playButton(m_renderer, "playButton", "saiyan_Font", PLAY_BUTTON_TEXT,buttonType::PLAY, PLAY_BUTTON_X, PLAY_BUTTON_Y);
+	Button soundButton(m_renderer, "soundButton", "saiyan_Font", SOUND_BUTTON_TEXT, buttonType::SOUND, SOUND_BUTTON_X, SOUND_BUTTON_Y);
+	Button exitButton(m_renderer, "exitButton", "saiyan_Font", EXIT_BUTTON_TEXT, buttonType::EXIT, EXIT_BUTTON_X, EXIT_BUTTON_Y);
 
 
 	//Close
@@ -161,19 +122,18 @@ int main(int, char*[])
 		exitButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);*/
 
 		// DRAW
-		/*SDL_RenderClear(m_renderer);*/
 		m_renderer->Clear();
 		//Background
-		//SDL_RenderCopy(m_renderer, bgTexture, nullptr, &myRectangle2ToSDL_Rect(bgRect));
 		m_renderer->PushImage("backGround_Texture","backGround_Rect");
-
 		//Text
-		/*SDL_RenderCopy(m_renderer, textTexture, nullptr, &myRectangle2ToSDL_Rect(textRect));
-		SDL_RenderCopy(m_renderer, playButton.texture, nullptr, &myRectangle2ToSDL_Rect(playButton.rect));
-		SDL_RenderCopy(m_renderer, soundButton.texture, nullptr, &myRectangle2ToSDL_Rect(soundButton.rect));
-		SDL_RenderCopy(m_renderer, exitButton.texture, nullptr, &myRectangle2ToSDL_Rect(exitButton.rect));*/
+		m_renderer->PushImage("title_Text", "title_Rect");
+		//Buttons
+		playButton.draw(m_renderer);
+		exitButton.draw(m_renderer);
+		soundButton.draw(m_renderer);
+
+
 		//Cursor
-		//SDL_RenderCopy(m_renderer, playerTexture, nullptr, &myRectangle2ToSDL_Rect(playerRect));
 		m_renderer->PushImage("player_Texture", "player_Rect");
 
 		/*SDL_RenderPresent(m_renderer);*/
