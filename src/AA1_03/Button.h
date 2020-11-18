@@ -3,6 +3,8 @@
 
 struct Button {
 	buttonType type;
+	enum buttonState{DEFAULT,ACTIVE,HOVER};
+	buttonState state;
 
 	std::string buttonId;
 	std::string defaultId = "default";
@@ -19,8 +21,7 @@ struct Button {
 	int x, y;
 	std::string text;
 
-	bool activated;
-
+	bool active;
 
 	Button(Renderer *_renderer,std::string button_id, std::string font_id, std::string _text, buttonType _type, int _x, int _y) {
 		
@@ -35,6 +36,7 @@ struct Button {
 		hoverId.append(button_id);
 
 		actualId = defaultId;
+		state = buttonState::DEFAULT;
 
 		_renderer->LoadTextureText(font_id, { defaultId,_text, defaultColor });
 		_renderer->LoadTextureText(font_id, { activeId,_text, activeColor });
@@ -50,8 +52,15 @@ struct Button {
 
 		text = _text;
 		type = _type;
-		if (type == SOUND) activated = true;
-		else activated = false;
+		if (type == SOUND) {
+			state = buttonState::ACTIVE;
+			actualId = activeId;
+			active = true;
+		}
+		else {
+			active = false;
+		}
+		
 
 	}
 
@@ -59,46 +68,45 @@ struct Button {
 
 	}
 	void draw(Renderer* _renderer) {
-		_renderer->PushImage(defaultId, rectId);
+		_renderer->PushImage(actualId, rectId);
+		//std::cout << state << std::endl;
 	}
 
-	/*void hoverButton(VEC2 _mouseCoord, SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
+	void hoverButton(VEC2 _mouseCoord) {
 
 		if (colCursorVsRect(_mouseCoord, rect)) {
-			if (color.a != hoverColor.a) {
-				texture = hoverTexture;
-				color = hoverColor;
+			if (state != buttonState::HOVER) {
+				actualId = hoverId;
+				state = buttonState::HOVER;
 			}
 		}
 		else {
-			if (activated) {
-				if (color.a != activeColor.a) {
-					texture = activeTexture;
-					color = activeColor;
+			if (active) {
+				if (state != buttonState::ACTIVE) {
+					state = buttonState::ACTIVE;
+					actualId = activeId;
 				}
 			}
 			else {
-				if (color.a != defaultColor.a) {
-					texture = defaultTexture;
-					color = defaultColor;
+				if (state != buttonState::DEFAULT) {
+					state = buttonState::DEFAULT;
+					actualId = defaultId;
 				}
 			}
 		}
 	}
 
-	void activate(SDL_Renderer *_renderer, TTF_Font *_font, SDL_Surface *_surface) {
-		if (!activated) {
-			texture = activeTexture;
-			color = activeColor;
-			activated = true;
+	void activate() {
+		if (!active) {
+			active = true;
+			actualId = activeId;
 		}
 		else {
-			texture = defaultTexture;
-			color = defaultColor;
-			activated = false;
+			active = false;
+			actualId = defaultId;;
 		}
 	}
-*/
+
 	bool wasButtonClicked(VEC2 _mouseCoord, bool _clicked) {
 		return (colCursorVsRect(_mouseCoord, rect) && _clicked);
 	}

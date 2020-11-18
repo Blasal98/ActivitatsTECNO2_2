@@ -98,18 +98,18 @@ int main(int, char*[])
 		// UPDATE
 			//buttonClicks
 
-		/*if (playButton.wasButtonClicked(mouseCoord, clicked))
-			playButton.activate(m_renderer, font, tmpSurf);
+		if (playButton.wasButtonClicked(mouseCoord, clicked))
+			playButton.activate();
 		else if (soundButton.wasButtonClicked(mouseCoord, clicked)) {
-			soundButton.activate(m_renderer, font, tmpSurf);
-			if (soundButton.activated)
+			soundButton.activate();
+			if (soundButton.active)
 				Mix_ResumeMusic();
 			else
 				Mix_PauseMusic();
 		}
 		else if (exitButton.wasButtonClicked(mouseCoord, clicked))
 			isRunning = false;
-		clicked = false;*/
+		clicked = false;
 
 
 		//Cursor
@@ -118,9 +118,9 @@ int main(int, char*[])
 		m_renderer->LoadRect("player_Rect", player_Rect);
 		
 		//Hover
-		/*playButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);
-		soundButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);
-		exitButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);*/
+		playButton.hoverButton(mouseCoord);
+		soundButton.hoverButton(mouseCoord);
+		exitButton.hoverButton(mouseCoord);
 
 		// DRAW
 		m_renderer->Clear();
@@ -143,20 +143,10 @@ int main(int, char*[])
 	}
 
 	// --- DESTROY ---
-	/*SDL_DestroyTexture(bgTexture);
-	SDL_DestroyTexture(textTexture);
-	SDL_DestroyTexture(playerTexture);
-
-	IMG_Quit();
-	SDL_DestroyRenderer(m_renderer);
-	SDL_DestroyWindow(m_window);*/
 	Mix_CloseAudio();
 	Mix_Quit();
 
 	delete m_renderer;
-
-	//// --- QUIT ---
-	//SDL_Quit();
 
 	return 0;
 }
