@@ -28,17 +28,19 @@ int main(int, char*[])
 
 
 
-
+	// --- IMAGES ---
 	//MOUSE
 	VEC2 mouseCoord{ 0,0 };
 	bool clicked = false;
+	m_renderer->LoadTexture("player_Texture", "../../res/img/kintoun.png");	
+	RECT player_Rect = { 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT };
+	m_renderer->LoadRect("player_Rect", player_Rect);
 
-
+	//BG
 	m_renderer->LoadTexture("backGround_Texture", "../../res/img/bg.jpg");
 	m_renderer->LoadRect("backGround_Rect", { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	m_renderer->LoadTexture("player_Texture", "../../res/img/kintoun.png");
-	m_renderer->LoadRect("player_Rect", { 0,0,CURSOR_CLOUD_WIDTH,CURSOR_CLOUD_HEIGHT });
+
 
 	//-->Animated Sprite ---
 
@@ -55,9 +57,6 @@ int main(int, char*[])
 	Button exitButton(m_renderer, "exitButton", "saiyan_Font", EXIT_BUTTON_TEXT, buttonType::EXIT, EXIT_BUTTON_X, EXIT_BUTTON_Y);
 
 
-	//Close
-	//SDL_FreeSurface(tmpSurf);
-	//TTF_CloseFont(font);
 
 	// --- AUDIO ---
 
@@ -114,8 +113,10 @@ int main(int, char*[])
 
 
 		//Cursor
-		/*playerRect.x += (mouseCoord.x - playerRect.x - playerRect.w / 2) / 5;
-		playerRect.y += (mouseCoord.y - playerRect.y - playerRect.h / 2) / 5;*/
+		player_Rect.x += (mouseCoord.x - player_Rect.x - player_Rect.w / 2) / 5;
+		player_Rect.y += (mouseCoord.y - player_Rect.y - player_Rect.h / 2) / 5;
+		m_renderer->LoadRect("player_Rect", player_Rect);
+		
 		//Hover
 		/*playButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);
 		soundButton.hoverButton(mouseCoord, m_renderer, font, tmpSurf);
