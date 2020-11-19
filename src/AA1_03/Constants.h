@@ -29,3 +29,7 @@ const SDL_Color BUTTON_HOVER_COLOR{ 225,50,50,2 };
 #define EXIT_BUTTON_Y 250
 #define EXIT_BUTTON_TEXT "EXIT"
 
+#define CLOCKS_PER_SEC ((clock_t)1000)
+const int FPS = 60;
+const int DELAY_TIME = 1000 / FPS;
+

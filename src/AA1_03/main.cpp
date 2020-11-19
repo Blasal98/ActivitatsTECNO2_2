@@ -14,6 +14,7 @@
 #include "Button.h"
 
 #include "Renderer.h"
+#include <time.h>
 
 int main(int, char*[])
 {
@@ -27,6 +28,11 @@ int main(int, char*[])
 		throw "No es pot inicialitzar SDL_Mixer";
 
 
+	//DT + FrameControl
+	clock_t lastTime = clock();
+	float dt = 0;
+	Uint32 frameStart, frameTime;
+	double totalTime = 0;
 
 	// --- IMAGES ---
 	//MOUSE
@@ -40,9 +46,10 @@ int main(int, char*[])
 	m_renderer->LoadTexture("backGround_Texture", "../../res/img/bg.jpg");
 	m_renderer->LoadRect("backGround_Rect", { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT });
 
+	// --- Animated Sprite ---
 
 
-	//-->Animated Sprite ---
+
 
 	// --- TEXT ---
 
@@ -75,6 +82,9 @@ int main(int, char*[])
 	SDL_Event event;
 	bool isRunning = true;
 	while (isRunning) {
+		//FRAME CONTROL
+		frameStart = SDL_GetTicks();
+
 		// HANDLE EVENTS
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
@@ -140,6 +150,17 @@ int main(int, char*[])
 		/*SDL_RenderPresent(m_renderer);*/
 		m_renderer->Render();
 
+		//dt
+		dt = clock() - lastTime;
+		lastTime = clock();
+		dt /= CLOCKS_PER_SEC;
+		totalTime += dt;
+		std::cout << totalTime << std::endl;
+		
+		//FRAME CONTROL
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameTime < DELAY_TIME)
+			SDL_Delay((int)(DELAY_TIME-frameTime));
 	}
 
 	// --- DESTROY ---
