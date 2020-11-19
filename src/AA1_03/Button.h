@@ -12,10 +12,6 @@ struct Button {
 	std::string hoverId = "hover";
 	std::string actualId;
 
-	Color defaultColor;
-	Color activeColor;
-	Color hoverColor;
-
 	std::string rectId;
 	RECT rect;
 	int x, y;
@@ -27,9 +23,6 @@ struct Button {
 		
 		buttonId = button_id;
 
-		defaultColor = { 255,255,255,255 };
-		activeColor = { 255,255,0,255 };
-		hoverColor = { 255,0,0,255 };
 
 		defaultId.append(button_id);
 		activeId.append(button_id);
@@ -38,9 +31,9 @@ struct Button {
 		actualId = defaultId;
 		state = buttonState::DEFAULT;
 
-		_renderer->LoadTextureText(font_id, { defaultId,_text, defaultColor });
-		_renderer->LoadTextureText(font_id, { activeId,_text, activeColor });
-		_renderer->LoadTextureText(font_id, { hoverId,_text, hoverColor });
+		_renderer->LoadTextureText(font_id, { defaultId,_text, BUTTON_DEFAULT_COLOR });
+		_renderer->LoadTextureText(font_id, { activeId,_text, BUTTON_ACTIVE_COLOR });
+		_renderer->LoadTextureText(font_id, { hoverId,_text, BUTTON_HOVER_COLOR });
 
 		x = _x;
 		y = _y;
@@ -67,9 +60,9 @@ struct Button {
 	~Button() {
 
 	}
+
 	void draw(Renderer* _renderer) {
 		_renderer->PushImage(actualId, rectId);
-		//std::cout << state << std::endl;
 	}
 
 	void hoverButton(VEC2 _mouseCoord) {

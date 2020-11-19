@@ -48,7 +48,16 @@ int main(int, char*[])
 
 	// --- Animated Sprite ---
 
-
+	int anim_sprite_num = 6;
+	float anim_sprite_timeXsprite = 0.2f;
+	float anim_sprite_count = 0;
+	int anim_sprite_index = 0;
+	m_renderer->LoadTexture("anim_Texture", "../../res/img/sp01.png");
+	RECT rectInSheed = {0,0,1536/ anim_sprite_num,256};
+	RECT rectInGame = {0,0,1536/ anim_sprite_num,256};
+	m_renderer->LoadRect("anim_RectInSheed", rectInSheed);
+	m_renderer->LoadRect("anim_RectInGame", rectInGame);
+	
 
 
 	// --- TEXT ---
@@ -143,6 +152,23 @@ int main(int, char*[])
 		exitButton.draw(m_renderer);
 		soundButton.draw(m_renderer);
 
+		//animated
+		if (anim_sprite_count >= anim_sprite_timeXsprite) {
+
+			if (rectInSheed.x == 1536 - 256)
+				rectInSheed.x = 0;
+			else
+				rectInSheed.x += 256;
+			m_renderer->LoadRect("anim_RectInSheed", rectInSheed);
+
+			anim_sprite_count = 0;
+		}
+		else {
+			anim_sprite_count += dt;
+		}
+
+		m_renderer->PushSprite("anim_Texture", "anim_RectInSheed", "anim_RectInGame");
+
 
 		//Cursor
 		m_renderer->PushImage("player_Texture", "player_Rect");
@@ -155,7 +181,7 @@ int main(int, char*[])
 		lastTime = clock();
 		dt /= CLOCKS_PER_SEC;
 		totalTime += dt;
-		std::cout << totalTime << std::endl;
+		//std::cout << totalTime << std::endl;
 		
 		//FRAME CONTROL
 		frameTime = SDL_GetTicks() - frameStart;
