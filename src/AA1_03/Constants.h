@@ -33,3 +33,8 @@ const Color BUTTON_HOVER_COLOR{ 225,50,50,2 };
 const int FPS = 60;
 const int DELAY_TIME = 1000 / FPS;
 
+#define ANIM_SHEED_W 1536
+#define ANIM_SHEED_H 256
+#define ANIM_QUANTITY 6
+
+

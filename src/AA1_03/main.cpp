@@ -48,13 +48,13 @@ int main(int, char*[])
 
 	// --- Animated Sprite ---
 
-	int anim_sprite_num = 6;
-	float anim_sprite_timeXsprite = 0.2f;
+	float anim_sprite_timeXsprite = 0.12f;
 	float anim_sprite_count = 0;
 	int anim_sprite_index = 0;
+	float anim_velocity = 150;
 	m_renderer->LoadTexture("anim_Texture", "../../res/img/sp01.png");
-	RECT rectInSheed = {0,0,1536/ anim_sprite_num,256};
-	RECT rectInGame = {0,0,1536/ anim_sprite_num,256};
+	RECT rectInSheed = {0,0,ANIM_SHEED_W / ANIM_QUANTITY,ANIM_SHEED_H};
+	RECT rectInGame = {0,300,ANIM_SHEED_W / ANIM_QUANTITY,ANIM_SHEED_H};
 	m_renderer->LoadRect("anim_RectInSheed", rectInSheed);
 	m_renderer->LoadRect("anim_RectInGame", rectInGame);
 	
@@ -155,10 +155,10 @@ int main(int, char*[])
 		//animated
 		if (anim_sprite_count >= anim_sprite_timeXsprite) {
 
-			if (rectInSheed.x == 1536 - 256)
+			if (rectInSheed.x == ANIM_SHEED_W - ANIM_SHEED_H)
 				rectInSheed.x = 0;
 			else
-				rectInSheed.x += 256;
+				rectInSheed.x += ANIM_SHEED_W / ANIM_QUANTITY;
 			m_renderer->LoadRect("anim_RectInSheed", rectInSheed);
 
 			anim_sprite_count = 0;
@@ -167,6 +167,14 @@ int main(int, char*[])
 			anim_sprite_count += dt;
 		}
 
+		if (rectInGame.x > SCREEN_WIDTH) {
+			rectInGame.x = -ANIM_SHEED_W/ANIM_QUANTITY;
+		}
+		else {
+			rectInGame.x += anim_velocity * dt;
+		}
+
+		m_renderer->LoadRect("anim_RectInGame", rectInGame);
 		m_renderer->PushSprite("anim_Texture", "anim_RectInSheed", "anim_RectInGame");
 
 
