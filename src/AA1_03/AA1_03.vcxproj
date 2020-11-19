@@ -22,11 +22,13 @@
     <ClInclude Include="Aud_Renderer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
