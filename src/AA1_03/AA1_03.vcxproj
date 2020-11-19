@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Aud_Renderer.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Renderer.h" />

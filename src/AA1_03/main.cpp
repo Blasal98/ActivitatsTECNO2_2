@@ -1,7 +1,6 @@
 #include <SDL.h> //Always needs to be included for an SDL app
 #include <SDL_image.h>
 #include <SDL_ttf.h> 
-#include <SDL_mixer.h> 
 
 #include <exception>
 #include <iostream>
@@ -14,19 +13,13 @@
 #include "Button.h"
 
 #include "Renderer.h"
+#include "Aud_Renderer.h"
 #include <time.h>
 
 int main(int, char*[])
 {
 	Renderer* m_renderer = new Renderer();
-
-	//-->SDL_Mix
-	const Uint8 audFlags{ MIX_INIT_MP3 | MIX_INIT_OGG };
-	if (!(Mix_Init(audFlags) & audFlags)) throw "Error: SDL_mixer init";
-
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) != 0)
-		throw "No es pot inicialitzar SDL_Mixer";
-
+	Aud_Renderer* a_renderer = new Aud_Renderer();
 
 	//DT + FrameControl
 	clock_t lastTime = clock();
@@ -76,11 +69,9 @@ int main(int, char*[])
 
 	// --- AUDIO ---
 
-	Mix_Music *soundTrack{ Mix_LoadMUS("../../res/au/mainTheme.mp3") };
-	if (soundTrack == nullptr) throw "Error: soundTrack load";
-
-	Mix_VolumeMusic(MIX_MAX_VOLUME);
-	Mix_PlayMusic(soundTrack, -1);
+	a_renderer->addTheme("mainTheme","../../res/au/mainTheme.mp3" );
+	a_renderer->playTheme("mainTheme",-1);
+	
 
 
 
@@ -122,9 +113,9 @@ int main(int, char*[])
 		else if (soundButton.wasButtonClicked(mouseCoord, clicked)) {
 			soundButton.activate();
 			if (soundButton.active)
-				Mix_ResumeMusic();
+				a_renderer->resumeMusic();
 			else
-				Mix_PauseMusic();
+				a_renderer->pauseMusic();
 		}
 		else if (exitButton.wasButtonClicked(mouseCoord, clicked))
 			isRunning = false;
@@ -152,6 +143,7 @@ int main(int, char*[])
 		exitButton.draw(m_renderer);
 		soundButton.draw(m_renderer);
 
+
 		//animated
 		if (anim_sprite_count >= anim_sprite_timeXsprite) {
 
@@ -173,9 +165,9 @@ int main(int, char*[])
 		else {
 			rectInGame.x += anim_velocity * dt;
 		}
-
 		m_renderer->LoadRect("anim_RectInGame", rectInGame);
 		m_renderer->PushSprite("anim_Texture", "anim_RectInSheed", "anim_RectInGame");
+
 
 
 		//Cursor
@@ -197,11 +189,9 @@ int main(int, char*[])
 			SDL_Delay((int)(DELAY_TIME-frameTime));
 	}
 
-	// --- DESTROY ---
-	Mix_CloseAudio();
-	Mix_Quit();
 
 	delete m_renderer;
+	delete a_renderer;
 
 	return 0;
 }
