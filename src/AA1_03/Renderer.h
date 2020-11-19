@@ -7,6 +7,8 @@
 #include "Types.h"
 #include "Constants.h"
 
+
+
 //SDL
 class Renderer {
 

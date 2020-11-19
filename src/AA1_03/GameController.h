@@ -1,6 +1,4 @@
 #include <SDL.h> //Always needs to be included for an SDL app
-#include <SDL_image.h>
-#include <SDL_ttf.h> 
 
 #include <exception>
 #include <iostream>
@@ -9,7 +7,7 @@
 
 #include "Types.h"
 #include "Constants.h"
-#include "Utils.h"
+//#include "Utils.h"
 #include "Button.h"
 
 #include "Renderer.h"

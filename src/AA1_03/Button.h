@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer.h"
+#include "Utils.h"
 
 struct Button {
 	buttonType type;

@@ -68,7 +68,7 @@ void GameController::update() {
 
 	// --- GAME LOOP ---
 
-	SDL_Event event;
+	//SDL_Event event;
 	bool isRunning = true;
 	while (isRunning) {
 		//FRAME CONTROL
