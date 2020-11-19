@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "Types.h"
-#include "Constants.h" 
+#include "Constants.h"
 #include "Utils.h"
 #include "Button.h"
 
