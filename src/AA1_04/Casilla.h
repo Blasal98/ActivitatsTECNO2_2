@@ -1,6 +1,6 @@
 #pragma once
 #include "Coordenadas.h"
 class Casilla {
-	Coordenadas coord;
+	Coordenadas coord; //NOT BENNE, ha de ser agregacio
 
 };

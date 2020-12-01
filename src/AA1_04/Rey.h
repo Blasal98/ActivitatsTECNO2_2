@@ -1,6 +1,6 @@
 #pragma once
 #include "Pieza.h"
-class Rey : Pieza {
+class Rey : public Pieza {
 
 public:
 	void move() {
