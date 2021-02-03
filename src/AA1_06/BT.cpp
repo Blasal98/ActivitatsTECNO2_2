@@ -21,7 +21,6 @@ BT::~BT() {
 void BT::deleteChildren(Node* n) {
 	if (n->left != nullptr) deleteChildren(n->left);
 	if (n->right != nullptr) deleteChildren(n->right);
-	std::cout << n->key << std::endl;
 	delete n;
 }
 
@@ -70,12 +69,29 @@ void BT::PostOrder(Node* n)
 //Implementar (AA106)
 BT::Node* BT::Search(int key)
 {
+	return Search(root,key);
+}
+BT::Node* BT::Search(Node* n,int key)
+{
+	Node* tmp;
+	if (n->key == key) return n;
+	if (n->left != nullptr) { 
+		tmp = Search(n->left, key);
+		if(tmp != nullptr)
+			return tmp;
+	}
+	if (n->right != nullptr) {
+		tmp = Search(n->right, key);
+		if (tmp != nullptr)
+			return tmp;
+	}
 	return nullptr;
 }
 
 //Implementar (AA106)
 bool BT::Exist(int key)
 {
+	if (Search(key) != nullptr) return true;
 	return false;
 }
 

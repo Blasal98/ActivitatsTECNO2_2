@@ -38,6 +38,7 @@ public:
 	 //si existe, devuelve un puntero al nodo que contiene la clave key
 	 //si no existe, devuelve nullptr
 	 Node* Search(int key);	//Implementar (AA106)
+	 Node* Search(Node* n,int key);	//Implementar (AA106)
 
 	 //Busca la clave key en el árbol
 	 //si existe,devuelve true
