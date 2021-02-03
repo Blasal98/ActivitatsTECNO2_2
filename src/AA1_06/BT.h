@@ -19,7 +19,6 @@ public:
 		Node(int x) :key(x), left(nullptr), right(nullptr) {};
 	};
 
-
 protected:
 	Node * root; 
 private:
@@ -33,6 +32,7 @@ private:
 public:
 	 BT();
 	 ~BT(); //Implementar
+	 void deleteChildren(Node* n);
 
 	 //Busca la clave key en el árbol
 	 //si existe, devuelve un puntero al nodo que contiene la clave key

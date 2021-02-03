@@ -15,7 +15,15 @@ BT::BT() {
 };
 
 //Implementar (AA106)
-BT::~BT() {}
+BT::~BT() {
+	deleteChildren(root);
+}
+void BT::deleteChildren(Node* n) {
+	if (n->left != nullptr) deleteChildren(n->left);
+	if (n->right != nullptr) deleteChildren(n->right);
+	std::cout << n->key << std::endl;
+	delete n;
+}
 
 void BT::PreOrder()
 {
