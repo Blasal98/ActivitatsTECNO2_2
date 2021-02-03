@@ -7,6 +7,7 @@ public:
 	~BST();
 	
 	Node* Search(int key);
+	Node* Search(Node* n,int key);
 	bool Exist(int key);
 	int Min();
 	int Max();

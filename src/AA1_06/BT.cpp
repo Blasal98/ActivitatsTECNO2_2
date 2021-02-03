@@ -74,18 +74,18 @@ BT::Node* BT::Search(int key)
 BT::Node* BT::Search(Node* n,int key)
 {
 	Node* tmp;
-	if (n->key == key) return n;
-	if (n->left != nullptr) { 
+	if (n->key == key) return n; //si es el input yasta
+	if (n->left != nullptr) {  //si te fill a left
 		tmp = Search(n->left, key);
-		if(tmp != nullptr)
+		if(tmp != nullptr) //si no era nullptr retornem
 			return tmp;
 	}
-	if (n->right != nullptr) {
+	if (n->right != nullptr) { //si te fill a right
 		tmp = Search(n->right, key);
-		if (tmp != nullptr)
+		if (tmp != nullptr) //si no era nullptr retornem
 			return tmp;
 	}
-	return nullptr;
+	return nullptr; //si ni ell ni fills son return nullptr
 }
 
 //Implementar (AA106)
@@ -123,6 +123,7 @@ void BT::GetNPair(Node* n, std::vector<int>& v) {
 //Implementar (AA106)
 int BT::Height()
 {
+
 	return 0;
 }
 
