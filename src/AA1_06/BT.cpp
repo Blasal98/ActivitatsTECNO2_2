@@ -24,9 +24,11 @@ void BT::deleteChildren(Node* n) {
 	delete n;
 }
 
+#pragma region ORDERS
 void BT::PreOrder()
 {
 	PreOrder(root);
+	std::cout << std::endl;
 }
 
 void BT::PreOrder(Node* n)
@@ -40,19 +42,21 @@ void BT::PreOrder(Node* n)
 void BT::InOrder()
 {
 	InOrder(root);
+	std::cout << std::endl;
 }
 
 void BT::InOrder(Node* n)
 {
 	if (n == nullptr) return;
 	InOrder(n->left);	  // se va al hijo izquierdo
-	std::cout << n->key;  //raiz
+	std::cout << n->key << '-';  //raiz
 	InOrder(n->right);	  // se va al hijo derecho
 }
 
 void BT::PostOrder()
 {
 	PostOrder(root);
+	std::cout << std::endl;
 }
 
 void BT::PostOrder(Node* n)
@@ -60,24 +64,49 @@ void BT::PostOrder(Node* n)
 	if (n == nullptr) return;
 	PostOrder(n->left);	  // se va al hijo izquierdo
 	PostOrder(n->right);	  // se va al hijo derecho
-	std::cout << n->key;  //raiz
+	std::cout << n->key << '-';  //raiz
 }
 
+//Implementar uno de los siguientes: PreOrderI, InOrderI o PostOrderI
+void BT::PreOrderI()
+{
+	Node* n = root;
+	std::queue<Node*> q;
+	q.push(n);
+	while (!q.empty())
+	{
+		Node* tmp = q.front();
+		q.pop();
 
+		std::cout << tmp->key << '-';
+		if (tmp->left != nullptr) q.push(tmp->left);
+		if (tmp->right != nullptr) q.push(tmp->right);
+	}
+	std::cout << std::endl;
+}
 
+void BT::InOrderI()
+{
+}
 
+void BT::PostOrderI()
+{
+}
+#pragma endregion
+
+#pragma region SEARCH/EXIST
 //Implementar (AA106)
 BT::Node* BT::Search(int key)
 {
-	return Search(root,key);
+	return Search(root, key);
 }
-BT::Node* BT::Search(Node* n,int key)
+BT::Node* BT::Search(Node* n, int key)
 {
 	Node* tmp;
 	if (n->key == key) return n; //si es el input yasta
 	if (n->left != nullptr) {  //si te fill a left
 		tmp = Search(n->left, key);
-		if(tmp != nullptr) //si no era nullptr retornem
+		if (tmp != nullptr) //si no era nullptr retornem
 			return tmp;
 	}
 	if (n->right != nullptr) { //si te fill a right
@@ -94,19 +123,12 @@ bool BT::Exist(int key)
 	if (Search(key) != nullptr) return true;
 	return false;
 }
+#pragma endregion
 
-//Implementar uno de los siguientes: PreOrderI, InOrderI o PostOrderI
-void BT::PreOrderI()
-{
-}
 
-void BT::InOrderI()
-{
-}
 
-void BT::PostOrderI()
-{
-}
+
+
 
 //Devuelve en un vector los valores pares encontrados 
 void BT::GetNPair(std::vector<int>& v) {
@@ -123,12 +145,21 @@ void BT::GetNPair(Node* n, std::vector<int>& v) {
 //Implementar (AA106)
 int BT::Height()
 {
-
-	return 0;
+	return Height(root);
+}
+int BT::Height(Node* n)
+{
+	if (n == nullptr) return 0;
+	return 1 + std::max(Height(n->left), Height(n->right));
 }
 
 //Implementar (AA106)
 bool BT::IsBalanced() {
+	return IsBalanced(root);
+}
+bool BT::IsBalanced(Node* n) {
+	if (n == nullptr) return true;
+	if ((abs(Height(n->left) - Height(n->right)) <= 1) && IsBalanced(n->left) && IsBalanced(n->right)) return true;
 	return false;
 }
 
@@ -144,7 +175,7 @@ int BT::Min()
 	return 0;
 }
 
-
+#pragma region NUMBER NODES
 //Versión recursiva
 int BT::GetNumberNodes() {
 	return GetNumberNodes(root);
@@ -162,7 +193,7 @@ int BT::GetNumberNodesI() {
 
 	//Caso: tree no vacio
 	std::queue<Node*> q;  //para guardar a los nodos que me quedan por visitar
-	
+
 	int count = 0; // contador de nodos
 	q.push(n);
 	while (!q.empty())
@@ -180,6 +211,10 @@ int BT::GetNumberNodesI() {
 	}
 	return count;
 }
+
+#pragma endregion
+
+
 
 
 

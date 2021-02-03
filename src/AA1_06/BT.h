@@ -23,7 +23,7 @@ protected:
 	Node * root; 
 private:
 	int GetNumberNodes(Node* n);
-	void GetNPair(Node* n, std::vector<int>& v);
+	
 	void PreOrder(Node *n);
 	void InOrder(Node *n);
 	void PostOrder(Node *n);
@@ -57,10 +57,12 @@ public:
 
 	//Devuelve la altura del árbol
 	int Height();		//Implementar (AA106)
+	int Height(Node* n);		//Implementar (AA106)
 
 	//Devuelve true si el árbol está balanceado
 	//Devuleve false si no
 	bool IsBalanced();	//Implementar (AA106)
+	bool IsBalanced(Node* n);	//Implementar (AA106)
 
 	//Devuelve el máximo de las claves
 	int Max(); //Implementar (AA106)
@@ -74,9 +76,10 @@ public:
 	//Devuelve el número de nodos que tiene el árbol (versión iterativa)
 	int GetNumberNodesI();
 		
+	
 	//Devuelve (cómo parámetro) un vector con las claves encontradas que son par
 	void GetNPair(std::vector<int>& v);
-	
+	void GetNPair(Node* n, std::vector<int>& v);
 
 
 };

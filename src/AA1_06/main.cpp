@@ -11,31 +11,30 @@ int main() {
 	//Search + Exist fet               
 	//std::cout << t1.Exist(1) << std::endl;
 
-	/*t1.PreOrder();
-	t1.PostOrder();
+	t1.PreOrder();
 	t1.InOrder();
-*/
+	t1.PostOrder();
+
+
+	//std::cout << t1.GetNumberNodes() << std::endl;
+	//std::cout << t1.GetNumberNodesI() << std::endl;
+
+	/*std::vector<int> pairVec;
+	t1.GetNPair(pairVec);
+	std::cout << pairVec.size() << std::endl;*/
+
+	t1.PreOrderI();
+
+	std::cout << t1.Height() << std::endl;
+	std::cout << t1.IsBalanced() << std::endl;
+
 	BST bst1;
 
-	std::cout << bst1.Exist(1);
-	std::cout << bst1.Exist(2);
-	std::cout << bst1.Exist(3);
-	std::cout << bst1.Exist(4);
-	std::cout << bst1.Exist(5);
-	std::cout << bst1.Exist(6);
-	std::cout << bst1.Exist(7);
-	std::cout << bst1.Exist(8);
-	std::cout << bst1.Exist(9);
-	std::cout << bst1.Exist(10);
-	std::cout << bst1.Exist(11);
-	std::cout << bst1.Exist(12);
+	//std::cout << bst1.Exist(1);
+	
 	
 
-	/*int x = t1.GetNumberNodesI();
 
-	std::vector<int> v;
-
-	t1.GetNPair(v);*/
 	
 	return 0;
 
